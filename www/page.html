@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<link rel="stylesheet" href="css/jquery-mobile.css">
+		<link rel="stylesheet" href="css/index.css">
+		<title>Nacho Time!</title>
+	</head>
+	<body>
+		<div data-role="page" id="home">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Kies een catagorie:</p>
+				<ul>
+					<li><a href="#films" data-transition="slide">Films</a></li>
+					<li><a href="#series" data-transition="slide">Series</a></li>
+					<li><a href="#tekenfilms" data-transition="slide">Tekenfilms</a></li>
+				</ul>
+			</div>
+
+			<div data-role="footer">
+				<h1>Categorie&euml;n</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="films">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Kies een film:</p>
+				<ul>
+					<li><a href="#lm" data-transition="slide">The Lego Movie</a></li>
+					<li><a href="#sw" data-transition="slide">Star Wars</a></li>
+					<li><a href="#dt" data-transition="slide">3de Titel</a></li>
+				</ul>
+				<a href="#home" data-transition="slide" data-direction="reverse">Terug naar categorie&euml;n</a>
+			</div>
+
+			<div data-role="footer">
+				<h1>Films</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="lm">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>The Lego Movie</b></p>
+				<table>
+					<tr>
+						<td>Schrijver</td>
+						<td>Meneer LEGOlas</td>
+					</tr>
+					<tr>
+						<td>Priemiere</td>
+						<td>Al geweest</td>
+					</tr>
+				</table>
+				<p><a href="#films" data-transition="slide" data-direction="reverse">Terug naar films</a></p>
+			</div>
+
+			<div data-role="footer">
+				<h1>The Lego Movie</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="sw">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>Star Wars</b></p>
+				<table>
+					<tr>
+						<td>Schrijver</td>
+						<td>LucasArts</td>
+					</tr>
+					<tr>
+						<td>Priemiere</td>
+						<td>Al geweest</td>
+					</tr>
+				</table>
+				<p><a href="#films" data-transition="slide" data-direction="reverse">Terug naar films</a></p>
+			</div>
+			<div data-role="footer"><h1>Star Wars</h1></div>
+		</div>
+
+		<div data-role="page" id="dt">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>3de Titel</b></p>
+				<table>
+					<tr>
+						<td>Schrijver</td>
+						<td>Random Artiest</td>
+					</tr>
+					<tr>
+						<td>Priemiere</td>
+						<td>29-2-2016</td>
+					</tr>
+				</table>
+				<p><a href="#films" data-transition="slide" data-direction="reverse">Terug naar films</a></p>
+			</div>
+			<div data-role="footer"><h1>Star Wars</h1></div>
+		</div>
+
+		<div data-role="page" id="series">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Kies een serie:</p>
+				<ul>
+					<li><a href="#bbt" data-transition="slide">Big Bang Theory</a></li>
+					<li><a href="#ww" data-transition="slide">Wrestling wrestlers</a></li>
+					<li><a href="#dd" data-transition="slide">DoomsDay</a></li>
+				</ul>
+				<a href="#home" data-transition="slide" data-direction="reverse">Terug naar categorie&euml;n</a>
+			</div>
+
+			<div data-role="footer">
+				<h1>Series</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="bbt">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>The Big Bang Theory</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>9/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Ja</td>
+					</tr>
+				</table>
+				<p><a href="#series" data-transition="slide" data-direction="reverse">Terug naar series</a></p>
+			</div>
+
+			<div data-role="footer">
+				<h1>The Big Bang Theory</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="ww">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>Wrestling wrestlers</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>1/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Nee</td>
+					</tr>
+				</table>
+				<p><a href="#series" data-transition="slide" data-direction="reverse">Terug naar series</a></p>
+			</div>
+			<div data-role="footer"><h1>Wrestling wrestlers</h1></div>
+		</div>
+
+		<div data-role="page" id="dd">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>DoomsDay</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>7/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Ja</td>
+					</tr>
+				</table>
+				<p><a href="#series" data-transition="slide" data-direction="reverse">Terug naar series</a></p>
+			</div>
+			<div data-role="footer"><h1>DoomsDay</h1></div>
+		</div>
+
+		<div data-role="page" id="tekenfilms">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Kies een tekenfilm:</p>
+				<ul>
+					<li><a href="#tj" data-transition="slide">Tom &amp; Jerry</a></li>
+					<li><a href="#pf" data-transition="slide">Phineas and Ferb</a></li>
+					<li><a href="#cc" data-transition="slide">Chin Chan</a></li>
+				</ul>
+				<a href="#home" data-transition="slide" data-direction="reverse">Terug naar categorie&euml;n</a>
+			</div>
+
+			<div data-role="footer">
+				<h1>Tekenfilms</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="tj">
+			<div data-role="header">
+				<h1>Nacho Time!</h1>
+			</div>
+
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>Tom &amp; Jerry</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>10/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Nee</td>
+					</tr>
+				</table>
+				<p><a href="#tekenfilms" data-transition="slide" data-direction="reverse">Terug naar tekenfilms</a></p>
+			</div>
+
+			<div data-role="footer">
+				<h1>Tom &amp; Jerry</h1>
+			</div>
+		</div>
+
+		<div data-role="page" id="pf">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>Phineas and Ferb</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>7.8/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Ja</td>
+					</tr>
+				</table>
+				<p><a href="#tekenfilms" data-transition="slide" data-direction="reverse">Terug naar tekenfilms</a></p>
+			</div>
+			<div data-role="footer"><h1>Phineas and Ferb</h1></div>
+		</div>
+
+		<div data-role="page" id="cc">
+			<div data-role="header"><h1>Nacho Time!</h1></div>
+			<div data-role="main" class="ui-content">
+				<p>Gegevens over: <b>Chin Chan</b></p>
+				<table>
+					<tr>
+						<td>Rating</td>
+						<td>19/10</td>
+					</tr>
+					<tr>
+						<td>On-going</td>
+						<td>Nee</td>
+					</tr>
+				</table>
+				<p><a href="#tekenfilms" data-transition="slide" data-direction="reverse">Terug naar tekenfilms</a></p>
+			</div>
+			<div data-role="footer"><h1>Chin Chan</h1></div>
+		</div>
+
+		<script type="text/javascript"src="js/jquery.js"></script>
+		<script type="text/javascript"src="js/jquery-mobile.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript">
+			app.initialize();
+		</script>
+	</body>
+</html>

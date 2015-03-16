@@ -1,46 +1,191 @@
 <!DOCTYPE html>
-<!--
-    Copyright (c) 2012-2014 Adobe Systems Incorporated. All rights reserved.
-
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Eetnu restauranten gids</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+		<link rel="stylesheet" href="css/jquery-mobile.css">
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<title>Planning Poker</title>
+	</head>
+	<body style="height: calc(99.9% - 30px)">
+		<div id="header" data-role="header" data-position="fixed">
+			<img style="float: left; padding:6px; height: 30px; width: 30px;" src="logo.png">
+			<a href="#" id="menuBtn" data-icon="grid" class="ui-btn-right">Menu</a>
+			<h1>Planning Poker</h1>
+		</div>
+		<div data-role="panel" id="menu" data-position="right" data-display="push">
+			<p>Wijzig gebruikersnaam</p>
+			<p style="border-top: 1px solid black;"></p>
+			<p>Andere kamer</p>
+			<p style="border-top: 1px solid black;"></p>
+			<p>Instellingen</p>
+			<p style="border-top: 1px solid black;"></p>
+			<p>Uitloggen</p>
+		</div>
+		<div data-role="page" id="login">
+			<div data-role="main" class="ui-content">
+				<div style="width:270px; height:150px; position:absolute; left:50%; top:50%; margin:-75px 0 0 -135px;">
+					<input type="text" name="roomid" id="roomid" placeholder="Room ID"/>
+					<input type="text" name="wachtwoord" id="wachtwoord" placeholder="Wachtwoord"/>
+					<button id="toetredenBtn" class="ui-btn-hidden">Toetreden</button>
+				</div>
+			</div>
+		</div>
+
+		<div data-role="page" id="preferences">
+			<div data-role="main" class="ui-content">
+				<p>Welkom bij deze InfoSupport planning poker sessie!</p>
+
+				<p>Met wie hebben wij het genoegen?</p>
+
+				<input type="text" name="username" id="username" placeholder="Schermnaam"/>
+
+				<p>Kies een kleur die bij u past!</p>
+				
+				<table style="border-collapse: collapse; height: 100px; width: 90%; table-layout: fixed; margin: auto;">
+					<tr style="border: 1px solid #98bf21; height: 50%;">
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #000000;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #FF0000;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #00FF00;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #0000FF;"></td>
+					</tr>
+					<tr style="border: 1px solid #98bf21; height: 50%;">
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #FFFF00;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #00FFFF;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #FF00FF;"></td>
+						<td style="border: 1px solid #98bf21; width: 20%; background-color: #C0C0C0;"></td>
+					</tr>
+				</table>
+
+				<button id="startBtn" class="ui-btn-hidden">Start poker</button>
+			</div>
+		</div>
+
+		<div data-role="page" id="cartselect">
+			<div data-role="main" class="ui-content">
+				<table>
+					<tr>
+						<td>U en 3 andere spelers hebben nog geen kaart gekozen.</td>
+					</tr>
+				</table>
+				<p style="border-top: 1px solid black;"></p>
+
+				<h3>Het laten functioneren van het login-systeem</h3>
+
+				<p>De gebruiker moet middels het invoeren van een gebruikersnaam en een wachtwoord in kunnen loggen en worden doorverwezen naar de medewerkerspagina.</p>
+
+				<label for="select-choice-0" class="select">Kies een kaart:</label>
+				<select name="cart" id="cart">
+				   <option value="1">1</option>
+				   <option value="2">2</option>
+				   <option value="3">3</option>
+				   <option value="5">5</option>
+				   <option value="8">8</option>
+				   <option value="13">13</option>
+				   <option value="21">21</option>
+				   <option value="34">34</option>
+				   <option value="55">55</option>
+				   <option value="&#8734;">&#8734;</option>
+				   <option value="Koffie">Koffie</option>
+				</select>
+
+				<button id="chooseCartBtn" style="position: absolute; bottom: 10px; width:90%; margin: auto;" class="ui-btn-hidden">Kies kaart</button>
+			</div>
+		</div>
+
+		<div data-role="page" id="cartselected">
+			<div data-role="main" class="ui-content">
+				<h3 style="text-align: center;">Kaart gekozen!</h3>
+
+				<p>U heeft onderstaande kaart gekozen. Wacht tot de overige deelnemers klaar zijn.</p>
+
+				<p id="selectedCart" style="border-radius: 10px; border: 1px solid black; width: 160px; height: 100px; margin: auto; text-align: center; padding-top: 80px"><i class="fa fa-coffee"></i></p>
+			</div>
+		</div>
+
+		<script type="text/javascript"src="js/jquery.js"></script>
+		<script type="text/javascript"src="js/jquery-mobile.js"></script>
+		<script type="text/javascript"src="js/swipeupanddown.js"></script>
+
+	<script>
+		function goToFinalView()
+		{
+			$("#selectedCart").html($("#cart").val());
+			$.mobile.changePage('#cartselected', {transition: 'slide'});
+		}
+
+		var idOfPreviousPage = null;
+
+		$(document).ready(function(e)
+		{
+			$(window).on("swipeleft", function(e)
+			{
+				if ($.mobile.activePage.attr("id") !== "cartselected" && $.mobile.activePage.attr("id") !== "menu")
+				{
+					$.mobile.changePage("#" + $.mobile.activePage.next().attr("id"), {transition: 'slide'});
+				}
+			});
+
+			$(window).on("swiperight", function(e)
+			{
+				if ($.mobile.activePage.attr("id") !== "login" && $.mobile.activePage.attr("id") !== "menu")
+				{
+		 			$.mobile.changePage("#" + $.mobile.activePage.prev().attr("id"), {transition: 'slide', reverse: true});
+		 		}
+		    });
+
+		    $(window).on("swipeup", function(e)
+			{
+				if ($.mobile.activePage.attr("id") === "menu")
+				{
+ 					$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+ 					idOfPreviousPage = null;
+		 		}
+		    });
+
+		    $(window).on("swipedown", function(e)
+			{
+				if ($.mobile.activePage.attr("id") !== "menu")
+				{
+		 			idOfPreviousPage = $.mobile.activePage.attr("id");
+			 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
+		 		}
+		    });
+
+		    $("#header").toolbar();
+
+		    $("#menuBtn").on("tap",function(){
+
+		    	if ($.mobile.activePage.attr("id") !== "menu")
+		    	{
+		    		idOfPreviousPage = $.mobile.activePage.attr("id");
+			 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
+				}
+				else
+				{
+ 					$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+ 					idOfPreviousPage = null;
+				}
+			});
+
+			$("#toetredenBtn").on("tap", function(e)
+				{
+					$.mobile.changePage('#preferences', {transition: 'slide'});
+				});
+
+			$("#startBtn").on("tap", function (e)
+				{
+					$.mobile.changePage('#cartselect', {transition: 'slide'});
+				});
+
+			$("#chooseCartBtn").on("tap", function(e)
+				{
+					goToFinalView();
+				});
+		});
+		</script>
+
+	</body>
 </html>
