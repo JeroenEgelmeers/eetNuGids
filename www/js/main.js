@@ -59,7 +59,10 @@ $(document).ready(function(e)
 	});
 
 	// Modules
-	 $('.button').on('click',function(){
+	 $('#mailButton').on('click',function(){
        window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
+    });
+	 $('#callButton').on('click',function(){
+       window.location.href = "tel:06123456"; 
     });
 });
