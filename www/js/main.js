@@ -2,6 +2,27 @@ var idOfPreviousPage = null;
 
 $(document).ready(function(e)
 {
+	$.getJSON('https://api.eet.nu/tags?tags=lekker-top100', 
+		function(data){
+			var items = [];
+
+
+			for (i = 0; i < data.results.length; ++i) {
+				items.push('<li id="' + data.results[i].id + '"><a onclick="nextPage()" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
+			}
+			//alert(data.results.length);
+
+			 
+			 $(".jsonResult").html("");
+
+			  $( "<ul/>", {
+			    "class": "ui-listview",
+			    "data-role": "listview",
+			    html: items.join( "" )
+			  }).appendTo( ".jsonResult" ); 
+		}
+	);
+	
 	$(window).on("swipeleft", function(e)
 	{
 		if ($.mobile.activePage.attr("id") !== "index" && $.mobile.activePage.attr("id") !== "menu")
@@ -59,10 +80,14 @@ $(document).ready(function(e)
 	});
 
 	// Modules
-	 $('#mailButton').on('click',function(){
+	
+	('#webWebsite').on('click',function(){
+       window.location.href = "http://www.eet.nu/"; 
+    });
+	$('#mailButton').on('click',function(){
        window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
     });
-	 $('#callButton').on('click',function(){
-       window.location.href = "tel:06123456"; 
+	$('#callButton').on('click',function(){
+       window.location.href = "tel:0612345678"; 
     });
 });
