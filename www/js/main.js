@@ -2,16 +2,15 @@ var idOfPreviousPage = null;
 
 $(document).ready(function(e)
 {
+
 	$.getJSON('https://api.eet.nu/tags?tags=lekker-top100', 
 		function(data){
 			var items = [];
-
+			var curTag = "lekker-top100%2C";
 
 			for (i = 0; i < data.results.length; ++i) {
-				items.push('<li id="' + data.results[i].id + '"><a onclick="nextPage()" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
+				items.push('<li><a href="#" onclick="nextCatPage(\'' + data.results[i].resources.tags + '\'); return false;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
 			}
-			//alert(data.results.length);
-
 			 
 			 $(".jsonResult").html("");
 
@@ -40,24 +39,6 @@ $(document).ready(function(e)
  		}
     });
 
-    $(window).on("swipeup", function(e)
-	{
-		if ($.mobile.activePage.attr("id") === "menu")
-		{
-				$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
-				idOfPreviousPage = null;
- 		}
-    });
-
-    $(window).on("swipedown", function(e)
-	{
-		if ($.mobile.activePage.attr("id") !== "menu")
-		{
- 			idOfPreviousPage = $.mobile.activePage.attr("id");
-	 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
- 		}
-    });
-
     $("#header").toolbar();
 
     $("#menuBtn").on("tap",function(){
@@ -81,7 +62,7 @@ $(document).ready(function(e)
 
 	// Modules
 	
-	('#webWebsite').on('click',function(){
+	$('#webWebsite').on('click',function(){
        window.location.href = "http://www.eet.nu/"; 
     });
 	$('#mailButton').on('click',function(){
@@ -90,4 +71,46 @@ $(document).ready(function(e)
 	$('#callButton').on('click',function(){
        window.location.href = "tel:0612345678"; 
     });
+
+   	/* could be used for the menu. Will not work together with the swipeupanddown.js
+    $(window).on("swipeup", function(e)
+	{
+		if ($.mobile.activePage.attr("id") === "menu")
+		{
+				$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+				idOfPreviousPage = null;
+ 		}
+    });
+
+    $(window).on("swipedown", function(e)
+	{
+		if ($.mobile.activePage.attr("id") !== "menu")
+		{
+ 			idOfPreviousPage = $.mobile.activePage.attr("id");
+	 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
+ 		}
+    });*/
 });
+
+function nextCatPage(nextPage) {
+	$.getJSON(nextPage, 
+		function(data){
+			var items = [];
+			$(".jsonResult").html("Loading data..");
+
+			for (i = 0; i < data.results.length; ++i) {
+				items.push('<li><a href="#" onclick="nextCatPage(\'' + data.results[i].resources.tags + '\'); return false;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
+			}
+
+			$(".jsonResult").html("");
+
+			  $( "<ul/>", {
+			    "class": "ui-listview",
+			    "data-role": "listview",
+			    html: items.join( "" )
+			  }).appendTo( ".jsonResult" ); 
+		}
+	);
+}
+
+
