@@ -9,7 +9,7 @@ $(document).ready(function(e)
 			var curTag = "lekker-top100%2C";
 
 			for (i = 0; i < data.results.length; ++i) {
-				items.push('<li><a href="#" onclick="nextCatPage(\'' + data.results[i].resources.tags + '\'); return false;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
+				items.push('<li><a href="#" onclick="nextCatPage(\'' + data.results[i].resources.venues + '\'); return false;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
 			}
 			 
 			 $(".jsonResult").html("");
@@ -96,19 +96,13 @@ function nextCatPage(nextPage) {
 	$.getJSON(nextPage, 
 		function(data){
 			var items = [];
-			$(".jsonResult").html("Loading data..");
+			$(".jsonResult").html("Data wordt geladen.. Een moment geduld a.u.b.");
 
 			for (i = 0; i < data.results.length; ++i) {
-				items.push('<li><a href="#" onclick="nextCatPage(\'' + data.results[i].resources.tags + '\'); return false;" class="ui-btn ui-btn-icon-right ui-icon-carat-r">' + data.results[i].name + '</a></li>');
+				items.push('Naam: '+ data.result[i].name +' <br /><hr />');
 			}
 
-			$(".jsonResult").html("");
-
-			  $( "<ul/>", {
-			    "class": "ui-listview",
-			    "data-role": "listview",
-			    html: items.join( "" )
-			  }).appendTo( ".jsonResult" ); 
+			$(".jsonResult").html(items);
 		}
 	);
 }
