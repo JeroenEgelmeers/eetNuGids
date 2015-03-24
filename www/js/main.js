@@ -93,16 +93,17 @@ $(document).ready(function(e)
 });
 
 function nextCatPage(nextPage) {
+	$(".jsonResult").html("Data wordt geladen.. Een moment geduld a.u.b.");
 	$.getJSON(nextPage, 
 		function(data){
-			var items = [];
-			$(".jsonResult").html("Data wordt geladen.. Een moment geduld a.u.b.");
-
+			var items = $();
+			var para = $("<p></p>");
 			for (i = 0; i < data.results.length; ++i) {
-				items.push('Naam: '+ data.result[i].name +' <br /><hr />');
+				//items.add('Naam: '+ String(data.results[i].name) +' <br />');
+				para.html('Naam: '+ data.results[i].name +' <br />');
 			}
-
-			$(".jsonResult").html(items);
+			$(".jsonResult").html("");
+			$(".jsonResult").append(para);
 		}
 	);
 }
