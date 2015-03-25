@@ -18,8 +18,10 @@
 		<div data-role="panel" id="menu" data-position="right" data-display="push">
 			<ul data-role="listview">
 				<li><a href="#index">Eetnu</a></li>
+				<li><a href="#restaurantOnLocation">Zoek in de buurt</a></li>
 				<li><a href="#pickRestaurant">Restaurants</a></li>
-				<li><a href="#contact">Contact</a></li>
+				<li><a href="#settings">Settings</a></li>
+				<li><a href="#contact">Contact Eet.nu</a></li>
 			</ul>
 		</div>
 		<div data-role="page" id="index">
@@ -28,6 +30,19 @@
 				<h1>Restaurants in Nederland</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 				<button id="webWebsite">Bezoek onze website</button>
+			</div>
+		</div>
+
+		<div data-role="page" id="restaurantOnLocation">
+			<div data-role="main" class="ui-content">
+				<h1>Vind een restaurant bij u in de buurt!</h1>
+				<p>Wilt u niet al te ver reizen? Kies een restaurant via onderstaande settings bij u in de buurt!</p>
+				<table>
+					<tr class="tr_content">
+						<td><input width="5%" min="0" max="1000" type="number" /></td>
+						<td>kilometer</td>
+					</tr>
+				</table>
 			</div>
 		</div>
 
@@ -44,6 +59,9 @@
 			<div data-role="main" class="ui-content">
 				<h1>Settings</h1>
 				<p>Wijzig de lokale settings.</p>
+				<!-- Mogelijkheid om sorteren @ categorieën te wijzigen -->
+				<!-- Mogelijkheid om niet gewaardeerde restaurants niet mee te nemen -->
+				<!-- Toon maximaal aantal resultaten. -->
 			</div>
 		</div>
 
@@ -53,6 +71,12 @@
 				<p>Missen we een restaurant? Kloppen er gegevens niet? Laat het ons weten!
 				<button id="mailButton" class="button">Stuur ons een e-mail!</button>
 				<button id="callButton" class="button">Bel ons!</button>
+			</div>
+		</div>
+
+		<div data-role="page" id="restaurantCategory">
+			<div data-role="main" class="ui-content" id="insertCategoryInfo">
+				<p>Data wordt geladen..</p>
 			</div>
 		</div>
 

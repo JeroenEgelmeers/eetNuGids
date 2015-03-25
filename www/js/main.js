@@ -93,19 +93,25 @@ $(document).ready(function(e)
 });
 
 function nextCatPage(nextPage) {
-	$(".jsonResult").html("Data wordt geladen.. Een moment geduld a.u.b.");
-	$.getJSON(nextPage, 
-		function(data){
-			var items = $();
-			var para = $("<p></p>");
+	$.mobile.changePage('#restaurantCategory', {transition: 'slide'});
+	$.getJSON(nextPage
+		
+	).done(function(data){
+			var items = [];
 			for (i = 0; i < data.results.length; ++i) {
 				//items.add('Naam: '+ String(data.results[i].name) +' <br />');
-				para.html('Naam: '+ data.results[i].name +' <br />');
+				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +'</td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td>'+ data.results[i].telephone +'</td></tr></table>');
 			}
-			$(".jsonResult").html("");
-			$(".jsonResult").append(para);
-		}
-	);
+			$("#insertCategoryInfo").html("");
+			$("#insertCategoryInfo").append(items.join(""));
+		})
+	.fail(function() {
+		$("#insertCategoryInfo").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald.</p>")
+	});
 }
 
+function getByLocation() {
+	// https://api.eet.nu/venues?max_distance=5000&geolocation=51.68851,5.28745
+	// Max_disatnace (in meters), long/lat
+}
 
