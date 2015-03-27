@@ -12,7 +12,9 @@
 	</head>
 	<body style="height: calc(99.9% - 30px)">
 		<div id="header" data-role="header" data-position="fixed">
-			<a href="#" id="menuBtn" data-icon="grid" class="ui-btn-left">Menu</a>
+			<div id="backButton">
+			</div>
+			<a href="#" id="menuBtn" data-icon="grid" class="ui-btn-right">Menu</a>
 			<center><img id="logo" src="logo.png"></center>
 		</div>
 		<div data-role="panel" id="menu" data-position="right" data-display="push">
@@ -33,7 +35,7 @@
 			</div>
 		</div>
 
-		<div data-role="page" id="restaurantOnLocation">
+		<div data-role="page" id="restaurantOnLocation" data-add-back-btn="true">
 			<div data-role="main" class="ui-content">
 				<h1>Vind een restaurant bij u in de buurt!</h1>
 				<p>Wilt u niet al te ver reizen? Kies een restaurant via onderstaande settings bij u in de buurt!</p>

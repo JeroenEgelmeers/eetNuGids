@@ -16,6 +16,7 @@ loadLocalStorage = function ()
 {   
 	$("#sort_by").val(window.localStorage.getObject("sort_by"));
 	$("#needsReview").val(window.localStorage.getObject("needsReview"));
+	$("#kilometers").val(window.localStorage.getObject("kilometers"));
 }
 
 
@@ -23,13 +24,51 @@ saveSettings = function ()
 {
 	window.localStorage.setObject("sort_by", $("#sort_by").val());  
 	window.localStorage.setObject("needsReview", $("#needsReview").val());
-
 	loadLocalStorage();
 
 	$('#infoBox').html("<p class=\"bg-success\">Instellingen opgeslagen!</p>");
 	$("#infoBox").show().delay(5000).fadeOut("slow");
 };
 
+$('a').click(function(){
+	backButton();
+});
+
+$('button').click(function(){
+	backButton();
+});
+
+pageBack = function ()
+{
+	switch($.mobile.activePage.attr("id")) {
+		case "restaurantOnLocation":
+		case "pickRestaurant":
+		case "settings":
+		case "contact":
+			$.mobile.changePage("#index", { reverse: true, transition: 'slide'});
+			$("#backButton").html("");
+		break;
+		case "restaurantOnLocationFound":
+			$.mobile.changePage("#restaurantOnLocation", { reverse: true, transition: 'slide'});
+		break;
+		case "restaurantCategory":
+			$.mobile.changePage("#pickRestaurant", { reverse: true, transition: 'slide'});
+		break;
+		default:
+		break;
+	}
+}
+
+
+backButton = function ()
+{   
+	if ($.mobile.activePage.attr("id") !== "index")
+	{
+		$("#backButton").html("<a href=\"#\" onclick=\"pageBack()\" class=\"ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all\"  data-role=\"button\" role=\"button\" style=\"border:0;\">Back</a>");
+	}else {
+		$("#backButton").html("");
+	}
+}
 
 $("#changeSettings").click(function (){ saveSettings(); });
 
@@ -135,7 +174,7 @@ function showRestaurantsFound(nextPage) {
 			var items = [];
 			for (i = 0; i < data.results.length; ++i) {
 				//items.add('Naam: '+ String(data.results[i].name) +' <br />');
-				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +'</td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td>'+ data.results[i].telephone +'</td></tr></table>');
+				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +'</td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 			}
 			$("#foundRestaurants").html("");
 			$("#foundRestaurants").append(items.join(""));
@@ -156,6 +195,8 @@ $("#searchInKilometers").click(function() {
 
 		navigator.geolocation.getCurrentPosition(onSuccessGeo, onErrorGeo, geo_options);
 	}, 0);
+	window.localStorage.setObject("kilometers", $("#kilometers").val());
+
 });
 
 function onSuccessGeo (position)
