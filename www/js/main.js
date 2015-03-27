@@ -62,11 +62,14 @@ pageBack = function ()
 
 backButton = function ()
 {   
-	if ($.mobile.activePage.attr("id") !== "index")
-	{
-		$("#backButton").html("<a href=\"#\" onclick=\"pageBack()\" class=\"ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all\"  data-role=\"button\" role=\"button\" style=\"border:0;\">Back</a>");
-	}else {
-		$("#backButton").html("");
+	switch($.mobile.activePage.attr("id")) {
+		case "index":
+		case "menu":
+			$("#backButton").html("");
+		break;
+		default:
+			$("#backButton").html("<a href=\"#\" onclick=\"pageBack()\" class=\"ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all\"  data-role=\"button\" role=\"button\" style=\"border:0;\">Back</a>");
+		break;
 	}
 }
 
@@ -95,7 +98,7 @@ $(document).ready(function(e)
 		}
 	);
 	
-	
+
 	// /* We should not be able to slide to the right side. - TESTING */
 	// $(window).on("swipeleft", function(e)
 	// {
