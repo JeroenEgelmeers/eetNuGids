@@ -30,6 +30,12 @@ $("#saveForm").on("submit", function()
     return false;
 });
 
+
+$("#searchInKilometers").click(function() {
+    alert("test");
+});
+
+
 loadLocalStorage = function ()
 {   
     var dataObject;
