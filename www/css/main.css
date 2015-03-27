@@ -5,10 +5,9 @@ h1 { color:#9e005d; font-size:20px; }
 
 #header { height:60px; background:#9e005d; }
 	#logo { padding-top:14px; max-height: 50px; }
-	#menuBtn { color:#FFF; background:#92005d; border:rgba(0,0,0,0.3) 1px solid; box-shadow:inset 0 1px rgba(255,255,255,0.3),0 1px rgba(255,255,255,0.3); }
+	#menuBtn { font-size:16px; color:#FFF; background:#92005d; border:rgba(0,0,0,0.3) 1px solid; box-shadow:inset 0 1px rgba(255,255,255,0.3),0 1px rgba(255,255,255,0.3); }
 .jsonResult { margin:40px 0 40px; }
-
-
+#pageBack { font-size:25px;	 }
 table {}
 	table .tr_header { color:#FFF; background:#9e005d; }
 		table .tr_header td { padding:10px; }
@@ -26,10 +25,11 @@ table {}
 #infoBox { display:none; }
 
 /* Portrait and Landscape Phones */
-@media screen and (device-width: 320px) and (device-height: 640px) and (-webkit-device-pixel-ratio: 2) {
-  	#header { height:120px; }
+@media (max-device-width: 320px) {
+  	/*#header { height:120px !important; }
   	#logo { max-height:80px; }
   	#menuBtn {  }
+  	.ui-listview li a.ui-btn { padding:40px 10px; }*/
 }
 
 /* Portrait and Landscape Tablets */
