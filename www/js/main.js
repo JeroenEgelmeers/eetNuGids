@@ -164,7 +164,7 @@ function nextCatPage(nextPage) {
 				if (window.localStorage.getObject("needsReview") == "on" && data.results[i].rating == 0) {
 					// Don't show the item as it has been turned off by the user.
 				}else {
-					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="geo:'+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
 			$("#insertCategoryInfo").html("");
@@ -181,7 +181,7 @@ function showRestaurantsFound(nextPage) {
 			var items = [];
 			for (i = 0; i < data.results.length; ++i) {
 				//items.add('Naam: '+ String(data.results[i].name) +' <br />');
-				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="geo:'+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 			}
 			$("#foundRestaurants").html("");
 			$("#foundRestaurants").append(items.join(""));
@@ -219,6 +219,60 @@ function onSuccessGeo (position)
 // onError Callback receives a PositionError object //
 function onErrorGeo (error)
 {
-    alert('Geocode: '    + error.code    + '\n' +
-          'message: ' + error.message + '\n');
+   $("#foundRestaurants").html("Locatie niet op kunnen vragen. Probeer het later opnieuw.");
+}
+
+function onSuccessContacts (contacts)
+{
+	var html = '<table>';
+	for (var i = 0; i < contacts.length; i++)
+	{
+		if ($.trim(contacts[i].displayName).length !== 0 || $.trim(contacts[i].nickName).length !== 0)
+		{
+			html += '<tr class="tr_header">';
+				html += '<td colspan="2">'+ contacts[i].displayName +'</td>';
+			html += '</tr>';
+			html += '<tr class="tr_content">';
+			html += '<td>Telefoon nummers:</td>';
+			html += '</td>';
+			if (contacts[i].phoneNumbers) {
+				for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+					html += "T: " + contacts[i].phoneNumbers[j].value;
+				}
+			}else { html += 'Geen telefoonnummer beschikbaar.'; }
+			
+			html += '</td>';
+			html += '</tr>';
+		}
+	}
+
+	if (contacts.length === 0)
+	{
+		html += '<tr class="tr_content"><td colspan="2">Geen contacten gevonden.</td></tr>';
+	}
+	html += '</table>';
+
+	$(".loadContacts").html(html);
+}
+
+function onErrorContacts (contactError)
+{
+	$(".loadContacts").html("Helaas, de contacten konden niet worden geladen.");
+}
+
+// Contacts module //
+document.addEventListener("deviceready", onDeviceReady, false);
+
+function onDeviceReady ()
+{
+	//contacts
+	setTimeout(function()
+	{
+		var contactOptions      = new ContactFindOptions();
+		contactOptions.filter   = "snackbar", "Restaurant";
+		contactOptions.multiple = false;
+		var fields = ["*"];
+		navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
+	}, 0);
+
 }
