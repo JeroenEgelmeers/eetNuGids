@@ -95,20 +95,21 @@ $(document).ready(function(e)
 		}
 	);
 	
-	$(window).on("swipeleft", function(e)
-	{
-		if ($.mobile.activePage.attr("id") !== "index" && $.mobile.activePage.attr("id") !== "menu")
-		{
-			$.mobile.changePage("#" + $.mobile.activePage.next().attr("id"), {transition: 'slide'});
-		}
-	});
+	
+	// /* We should not be able to slide to the right side. - TESTING */
+	// $(window).on("swipeleft", function(e)
+	// {
+	// 	if ($.mobile.activePage.attr("id") !== "index" && $.mobile.activePage.attr("id") !== "menu")
+	// 	{
+	// 		$.mobile.changePage("#" + $.mobile.activePage.next().attr("id"), {transition: 'slide'});
+	// 	}
+	// });
 
-	/* We should not be able to slide to the right side. - TESTING */
 	$(window).on("swiperight", function(e)
 	{
 		if ($.mobile.activePage.attr("id") !== "menu")
 		{
- 			$.mobile.changePage("#" + $.mobile.activePage.prev().attr("id"), {transition: 'slide', reverse: true});
+ 			pageBack();
  		}
     });
 
@@ -123,8 +124,8 @@ $(document).ready(function(e)
 		}
 		else
 		{
-				$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
-				idOfPreviousPage = null;
+			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+			idOfPreviousPage = null;
 		}
 	});
 
