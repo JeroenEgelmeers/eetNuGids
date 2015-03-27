@@ -30,11 +30,11 @@ saveSettings = function ()
 	$("#infoBox").show().delay(5000).fadeOut("slow");
 };
 
-$('a').click(function(){
+$('a').on("tap",function(){
 	backButton();
 });
 
-$('button').click(function(){
+$('button').on("tap",function(){
 	backButton();
 });
 
@@ -54,6 +54,9 @@ pageBack = function ()
 		case "restaurantCategory":
 			$.mobile.changePage("#pickRestaurant", { reverse: true, transition: 'slide'});
 		break;
+		case "menu":
+			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+		break;
 		default:
 		break;
 	}
@@ -63,10 +66,10 @@ pageBack = function ()
 backButton = function ()
 {   
 	switch($.mobile.activePage.attr("id")) {
-		case "index":
-		case "menu":
-			$("#backButton").html("");
-		break;
+		// case "index":
+		// case "menu":
+		// 	$("#backButton").html("");
+		// break;
 		default:
 			$("#backButton").html("<a href=\"#\" onclick=\"pageBack()\" class=\"ui-btn-left ui-btn ui-icon-back ui-btn-icon-notext ui-shadow ui-corner-all\"  data-role=\"button\" role=\"button\" style=\"border:0;\">Back</a>");
 		break;
