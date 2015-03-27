@@ -13,3 +13,14 @@ table {}
 	table .tr_header { color:#FFF; background:#9e005d; }
 		table .tr_header td { padding:10px; }
 	table .tr_content {  }
+
+
+.bg-success {
+  	padding:10px;
+  	background-color: #dff0d8;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#infoBox { display:none; }

@@ -39,10 +39,23 @@
 				<p>Wilt u niet al te ver reizen? Kies een restaurant via onderstaande settings bij u in de buurt!</p>
 				<table>
 					<tr class="tr_content">
-						<td><input width="5%" min="0" max="1000" type="number" /></td>
+						<td><input width="5%" name="kilometers" id="kilometers" min="0" max="1000" type="number" /></td>
 						<td>kilometer</td>
 					</tr>
+					<tr class="tr_content">
+						<td><button id="searchInKilometers">Zoeken</button></td>
+					</tr>
 				</table>
+			</div>
+		</div>
+
+		<div data-role="page" id="restaurantOnLocationFound">
+			<div data-role="main" class="ui-content">
+				<h1>Vind een restaurant bij u in de buurt!</h1>
+				<p>De volgende resultaten zijn gevonden:</p>
+				<div id="foundRestaurants">
+					<p>Een moment geduld a.u.b. de data wordt geladen..</p>
+				</div>
 			</div>
 		</div>
 
@@ -57,8 +70,45 @@
 
 		<div data-role="page" id="settings">
 			<div data-role="main" class="ui-content">
+				
+				<div id="infoBox">
+					<!-- Hier worden berichten aan toegevoegd -->
+				</div>
+
 				<h1>Settings</h1>
 				<p>Wijzig de lokale settings.</p>
+
+				<table width="100%">
+					<tr class="tr_content">
+						<td>Sorteer resultaten op:</td>
+						<td width="5%">&nbsp;</td>
+						<td width="20%">
+							<select id="sort_by" name="sort_by" data-role="dropdown">
+								<option value="rating">Beoordelling</option>
+								<option value="distance">Afstand</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="tr_content">
+						<td></td>
+
+					</tr>
+					<tr class="tr_content">
+						<td>
+							<label for="flip-min">Verwijder resultaten zonder waardering:</label>
+						</td>
+						<td width="20">&nbsp;</td>
+						<td>
+							<select name="needsReview" id="needsReview" data-role="slider">
+								<option value="off">UIT</option>
+								<option value="on">AAN</option>
+							</select>
+						</td>
+					</tr>
+					<tr class="tr_content">
+						<td colspan="3"><button id="changeSettings">Wijzigen</button></td>
+					</tr>
+				</table>
 				<!-- Mogelijkheid om sorteren @ categorieën te wijzigen -->
 				<!-- Mogelijkheid om niet gewaardeerde restaurants niet mee te nemen -->
 				<!-- Toon maximaal aantal resultaten. -->
