@@ -41,12 +41,8 @@ $('button').on("tap",function(){
 pageBack = function ()
 {
 	switch($.mobile.activePage.attr("id")) {
-		case "restaurantOnLocation":
-		case "pickRestaurant":
-		case "settings":
-		case "contact":
-			$.mobile.changePage("#index", { reverse: true, transition: 'slide'});
-			$("#backButton").html("");
+		case "index":
+			// Do nothing, you're on the first page!
 		break;
 		case "restaurantOnLocationFound":
 			$.mobile.changePage("#restaurantOnLocation", { reverse: true, transition: 'slide'});
@@ -58,6 +54,8 @@ pageBack = function ()
 			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
 		break;
 		default:
+			$.mobile.changePage("#index", { reverse: true, transition: 'slide'});
+			$("#backButton").html("");
 		break;
 	}
 }
@@ -161,10 +159,10 @@ function nextCatPage(nextPage) {
 	).done(function(data){
 			var items = [];
 			for (i = 0; i < data.results.length; ++i) {
-				if (window.localStorage.getObject("needsReview") == "on" && data.results[i].rating == 0) {
+				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
 					// Don't show the item as it has been turned off by the user.
 				}else {
-					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
 			$("#insertCategoryInfo").html("");
@@ -181,7 +179,11 @@ function showRestaurantsFound(nextPage) {
 			var items = [];
 			for (i = 0; i < data.results.length; ++i) {
 				//items.add('Naam: '+ String(data.results[i].name) +' <br />');
-				items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
+					// Don't show them.
+				}else {
+					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+				}
 			}
 			$("#foundRestaurants").html("");
 			$("#foundRestaurants").append(items.join(""));
@@ -224,25 +226,49 @@ function onErrorGeo (error)
 
 function onSuccessContacts (contacts)
 {
-	var html = '<table>';
+	var html = "";
+	html += '<table width="100%">';
 	for (var i = 0; i < contacts.length; i++)
 	{
 		if ($.trim(contacts[i].displayName).length !== 0 || $.trim(contacts[i].nickName).length !== 0)
 		{
+			var namePerson = "";
+			if ($.trim(contacts[i].displayName).length !== 0) { namePerson = contacts[i].displayName; }else { namePerson = contacts[i].nickName; }
 			html += '<tr class="tr_header">';
-				html += '<td colspan="2">'+ contacts[i].displayName +'</td>';
+				if (contacts[i].addresses !== null) {
+				 	//html += '<td colspan="2">'+ contacts[i].displayName +' <a href="http://maps.google.com/?daddr='+ contacts[i].addresses[0].streetAddress + ' ' + contacts[i].addresses[0].postalCode + ' ' + contacts[i].addresses[0].locality + '" class="linkNavigation">Navigeer</a></td>';
+					html += '<td colspan="2">'+ namePerson +' <a href="http://maps.google.com/?daddr='+ contacts[i].addresses[0].streetAddress + '" class="linkNavigation">Navigeer</a></td>';
+				}else {
+					html += '<td colspan="2">'+ namePerson + '</td>';
+				}
 			html += '</tr>';
 			html += '<tr class="tr_content">';
-			html += '<td>Telefoon nummers:</td>';
-			html += '</td>';
-			if (contacts[i].phoneNumbers) {
-				for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
-					html += "T: " + contacts[i].phoneNumbers[j].value;
-				}
-			}else { html += 'Geen telefoonnummer beschikbaar.'; }
-			
-			html += '</td>';
+				html += '<td>Telefoon:</td>';
+				html += '<td>';
+
+				if (contacts[i].phoneNumbers) {
+					for (var j = 0; j < contacts[i].phoneNumbers.length; j++) {
+						html += '<a href="tel:'+ contacts[i].phoneNumbers[j].value + '">'+contacts[i].phoneNumbers[j].value + '</a><br />';
+					}
+				}else { html += 'Geen nummer beschikbaar.'; }
+				
+				html += '</td>';
 			html += '</tr>';
+
+			if (contacts[i].addresses !== null) {
+				html += '<tr class="tr_content">';
+					html += '<td>Straat:</td>';
+					html += '<td>'+ contacts[i].addresses[0].streetAddress +'</td>';
+				html += '</tr>';
+				html += '<tr class="tr_content">';
+					html += '<td>Postcode:</td>';
+					html += '<td>'+ contacts[i].addresses[0].postalCode +'</td>';
+				html += '</tr>';
+				html += '<tr class="tr_content">';
+					html += '<td>Plaats:</td>';
+					html += '<td>'+ contacts[i].addresses[0].locality +'</td>';
+				html += '</tr>';
+			}
 		}
 	}
 
@@ -269,8 +295,8 @@ function onDeviceReady ()
 	setTimeout(function()
 	{
 		var contactOptions      = new ContactFindOptions();
-		contactOptions.filter   = "snackbar", "Restaurant";
-		contactOptions.multiple = false;
+		contactOptions.filter   = "snackbar";
+		contactOptions.multiple = true;
 		var fields = ["*"];
 		navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
 	}, 0);

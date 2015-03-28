@@ -22,6 +22,8 @@ table {}
 	border-radius: 10px;
 }
 
+a.linkNavigation { float:right; color:#FFF !important; font-size:14px; text-decoration:none; } 
+
 #infoBox { display:none; }
 
 /* Portrait and Landscape Phones */

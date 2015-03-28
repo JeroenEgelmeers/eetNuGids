@@ -24,7 +24,6 @@
   <gap:plugin name="org.apache.cordova.camera"/>
   <gap:plugin name="org.apache.cordova.media-capture"/>
   <gap:plugin name="org.apache.cordova.console"/>
-  <gap:plugin name="org.apache.cordova.contacts"/>
   <gap:plugin name="org.apache.cordova.device"/>
   <gap:plugin name="org.apache.cordova.device-motion"/>
   <gap:plugin name="org.apache.cordova.dialogs"/>
@@ -41,6 +40,7 @@
   <gap:plugin name="org.apache.cordova.device-orientation"/> <!-- Gives the possibility to show how the user has his phone horizontal / vertical. -->
   <gap:plugin name="org.apache.cordova.geolocation"/> <!-- We need this to know where the user is. -->
   <gap:plugin name="org.apache.cordova.globalization"/>
+  <gap:plugin name="org.apache.cordova.contacts"/> <!-- Reading contacts to show them in-app -->
 
   <!-- # Plugin's we'll use in this appplication -->
 
