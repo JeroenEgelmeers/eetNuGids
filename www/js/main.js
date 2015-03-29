@@ -151,8 +151,8 @@ $(document).ready(function(e)
 });
 
 function nextCatPage(nextPage) {
-	$("#insertCategoryInfo").html("<p>Data wordt geladen..");
 	$.mobile.changePage('#restaurantCategory', {transition: 'slide'});
+	$("#insertCategoryInfo").html("<p>Data wordt geladen..");
 	var sortedBy = window.localStorage.getObject("sort_by");
 	nextPage = nextPage+"&sort_by="+sortedBy;
 	$.getJSON(nextPage
@@ -162,7 +162,7 @@ function nextCatPage(nextPage) {
 				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
 					// Don't show the item as it has been turned off by the user.
 				}else {
-					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
 			$("#insertCategoryInfo").html("");
@@ -182,7 +182,7 @@ function showRestaurantsFound(nextPage) {
 				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
 					// Don't show them.
 				}else {
-					items.push('<table width="100%"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ (data.results[i].rating / 10) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
 			$("#foundRestaurants").html("");
@@ -191,7 +191,27 @@ function showRestaurantsFound(nextPage) {
 		$("#foundRestaurants").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
 	});
 }
-$("#searchInKilometers").click(function() {
+
+function getStars(setStars) {
+	var rating = '';
+	var setRating = setStars;
+	for(c = 0; c < 5; c++) {
+		if (setRating >= 2) {
+			rating += '<span class="full-star"></span>';
+		}else if (setRating == 1) {
+			rating += '<span class="half-star"></span>';
+		}else {
+			rating += '<span class="star"></span>';
+		}
+		if (setRating > 0) {
+			setRating = (setRating - 2);
+		}
+	}
+	rating += '&nbsp;('+(setStars)+')';
+	return rating;
+}
+
+$('#searchInKilometers').on('click',function(){
 	 $("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
 	//geolocation
 	setTimeout(function()
