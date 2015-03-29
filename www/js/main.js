@@ -99,16 +99,6 @@ $(document).ready(function(e)
 		}
 	);
 	
-
-	// /* We should not be able to slide to the right side. - TESTING */
-	// $(window).on("swipeleft", function(e)
-	// {
-	// 	if ($.mobile.activePage.attr("id") !== "index" && $.mobile.activePage.attr("id") !== "menu")
-	// 	{
-	// 		$.mobile.changePage("#" + $.mobile.activePage.next().attr("id"), {transition: 'slide'});
-	// 	}
-	// });
-
 	$(window).on("swiperight", function(e)
 	{
 		if ($.mobile.activePage.attr("id") !== "menu")
@@ -198,14 +188,12 @@ function getStars(setStars) {
 	for(c = 0; c < 5; c++) {
 		if (setRating >= 2) {
 			rating += '<span class="full-star"></span>';
-		}else if (setRating == 1) {
+		}else if (setRating >= 1) {
 			rating += '<span class="half-star"></span>';
 		}else {
 			rating += '<span class="star"></span>';
 		}
-		if (setRating > 0) {
-			setRating = (setRating - 2);
-		}
+		setRating = (setRating - 2);
 	}
 	rating += '&nbsp;('+(setStars)+')';
 	return rating;
