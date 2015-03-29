@@ -30,13 +30,6 @@ saveSettings = function ()
 	$("#infoBox").show().delay(5000).fadeOut("slow");
 };
 
-$('a').on("tap",function(){
-	backButton();
-});
-
-$('button').on("tap",function(){
-	backButton();
-});
 
 pageBack = function ()
 {
@@ -74,12 +67,37 @@ backButton = function ()
 	}
 }
 
-$("#changeSettings").click(function (){ saveSettings(); });
+$("#changeSettings").on('click', function (){ saveSettings(); });
+
+$('a').on('click',function(){
+	backButton();
+});
+
+$('button').on('click',function(){
+	backButton();
+});
+
+$('#searchInKilometers').on('click',function(){
+	 $("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
+	//geolocation
+	setTimeout(function()
+	{
+		var geo_options = {
+		enableHighAccuracy: true, 
+		maximumAge : 3000,
+		timeout : 60000
+		};
+
+		navigator.geolocation.getCurrentPosition(onSuccessGeo, onErrorGeo, geo_options);
+	}, 0);
+	window.localStorage.setObject("kilometers", $("#kilometers").val());
+
+});
 
 $(document).ready(function(e)
 {
 	loadLocalStorage();
-
+	
 	$.getJSON('https://api.eet.nu/tags?tags=lekker-top100', 
 		function(data){
 			var items = [];
@@ -199,23 +217,6 @@ function getStars(setStars) {
 	return rating;
 }
 
-$('#searchInKilometers').on('click',function(){
-	 $("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
-	//geolocation
-	setTimeout(function()
-	{
-		var geo_options = {
-		enableHighAccuracy: true, 
-		maximumAge : 3000,
-		timeout : 60000
-		};
-
-		navigator.geolocation.getCurrentPosition(onSuccessGeo, onErrorGeo, geo_options);
-	}, 0);
-	window.localStorage.setObject("kilometers", $("#kilometers").val());
-
-});
-
 function onSuccessGeo (position)
  {
     var distLat = position.coords.latitude;
@@ -294,8 +295,9 @@ function onErrorContacts (contactError)
 	$(".loadContacts").html("Helaas, de contacten konden niet worden geladen.");
 }
 
-// Contacts module //
+// Modules //
 document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("backbutton", pageBack, false);
 
 function onDeviceReady ()
 {
