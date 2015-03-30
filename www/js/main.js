@@ -35,7 +35,7 @@ pageBack = function ()
 {
 	switch($.mobile.activePage.attr("id")) {
 		case "index":
-			// Do nothing, you're on the first page!
+			$("#backButton").html("");
 		break;
 		case "restaurantOnLocationFound":
 			$.mobile.changePage("#restaurantOnLocation", { reverse: true, transition: 'slide'});
@@ -48,8 +48,10 @@ pageBack = function ()
 		break;
 		default:
 			$.mobile.changePage("#index", { reverse: true, transition: 'slide'});
-			$("#backButton").html("");
 		break;
+	}
+	if (idOfPreviousPage == "index") {
+		$("#backButton").html("");
 	}
 }
 
@@ -69,9 +71,16 @@ backButton = function ()
 
 $("#changeSettings").on('click', function (){ saveSettings(); });
 
-$('#pageBack').on('tap',function(){
+// check on backbutton
+$('a').on('tap',function(){
 	backButton();
 });
+
+$('button').on('tap',function(){
+	backButton();
+});
+
+// #check on backbutton
 
 $("#menuBtn").on("tap",function(){
 
@@ -103,9 +112,9 @@ $('#callButton').on('tap',function(){
    window.location.href = "tel:0612345678"; 
 });
 
-$('#searchInKilometers').on('tap',function(){
-	$.mobile.changePage('#restaurantOnLocationFound', {transition: 'slide'});
-	 $("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
+$('#searchInKilometers').on('click',function(){
+	$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
+	$("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
 	//geolocation
 	setTimeout(function()
 	{
@@ -124,7 +133,7 @@ $('#searchInKilometers').on('tap',function(){
 $(document).ready(function(e)
 {
 	loadLocalStorage();
-	
+	backButton();
 	$.getJSON('https://api.eet.nu/tags?tags=lekker-top100', 
 		function(data){
 			var items = [];
