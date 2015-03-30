@@ -69,15 +69,42 @@ backButton = function ()
 
 $("#changeSettings").on('click', function (){ saveSettings(); });
 
-$('a').on('click',function(){
+$('#pageBack').on('tap',function(){
 	backButton();
 });
 
-$('button').on('click',function(){
-	backButton();
+$("#menuBtn").on("tap",function(){
+
+	if ($.mobile.activePage.attr("id") !== "menu")
+	{
+		idOfPreviousPage = $.mobile.activePage.attr("id");
+ 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
+	}
+	else
+	{
+		$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+		idOfPreviousPage = null;
+	}
 });
 
-$('#searchInKilometers').on('click',function(){
+$("#indexBtn").on("tap", function (e)
+{
+	$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
+});
+
+// Modules
+$('#webWebsite').on('tap',function(){
+   window.location.href = "http://www.eet.nu/"; 
+});
+$('#mailButton').on('tap',function(){
+   window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
+});
+$('#callButton').on('tap',function(){
+   window.location.href = "tel:0612345678"; 
+});
+
+$('#searchInKilometers').on('tap',function(){
+	$.mobile.changePage('#restaurantOnLocationFound', {transition: 'slide'});
 	 $("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
 	//geolocation
 	setTimeout(function()
@@ -127,35 +154,6 @@ $(document).ready(function(e)
 
     $("#header").toolbar();
 
-    $("#menuBtn").on("tap",function(){
-
-    	if ($.mobile.activePage.attr("id") !== "menu")
-    	{
-    		idOfPreviousPage = $.mobile.activePage.attr("id");
-	 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
-		}
-		else
-		{
-			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
-			idOfPreviousPage = null;
-		}
-	});
-
-	$("#indexBtn").on("tap", function (e)
-	{
-		$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
-	});
-
-	// Modules
-	$('#webWebsite').on('click',function(){
-       window.location.href = "http://www.eet.nu/"; 
-    });
-	$('#mailButton').on('click',function(){
-       window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
-    });
-	$('#callButton').on('click',function(){
-       window.location.href = "tel:0612345678"; 
-    });
 });
 
 function nextCatPage(nextPage) {
@@ -310,5 +308,4 @@ function onDeviceReady ()
 		var fields = ["*"];
 		navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
 	}, 0);
-
 }
