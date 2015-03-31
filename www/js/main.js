@@ -48,6 +48,9 @@ pageBack = function ()
 		case "menu":
 			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
 		break;
+		case "restaurantExtraInfo":
+			$.mobile.changePage("#restaurantCategory", { reverse: true, transition: 'slide'});
+		break;
 		default:
 			$.mobile.changePage("#index", { reverse: true, transition: 'slide'});
 		break;
@@ -172,7 +175,7 @@ $(document).ready(function(e)
 
 function nextCatPage(nextPage) {
 	$.mobile.changePage('#restaurantCategory', {transition: 'slide'});
-	$("#insertCategoryInfo").html("<p>Data wordt geladen..");
+	$(".dataRestaurants").html("<p>Data wordt geladen..");
 	var sortedBy = window.localStorage.getObject("sort_by");
 	nextPage = nextPage+"&sort_by="+sortedBy;
 	$.getJSON(nextPage
@@ -182,13 +185,13 @@ function nextCatPage(nextPage) {
 				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
 					// Don't show the item as it has been turned off by the user.
 				}else {
-					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2">'+ data.results[i].name +' <a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2"><a href="#" onclick="loadExtraInfo('+data.results[i].id+')">'+ data.results[i].name +'</a><a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
-			$("#insertCategoryInfo").html("");
-			$("#insertCategoryInfo").append(items.join(""));
+			$(".dataRestaurants").html("");
+			$(".dataRestaurants").append(items.join(""));
 	}).fail(function() {
-		$("#insertCategoryInfo").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
+		$(".dataRestaurants").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
 	});
 }
 
@@ -208,6 +211,35 @@ function showRestaurantsFound(nextPage) {
 			$("#foundRestaurants").append(items.join(""));
 	}).fail(function() {
 		$("#foundRestaurants").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
+	});
+}
+
+function loadExtraInfo(venuesId) {
+	$(".insertExtraInfo").html("<p>Data wordt geladen..</p>");
+	if ($(document).width() > 750) {
+		
+	}else {
+		$.mobile.changePage("#restaurantExtraInfo", { reverse: false, transition: 'slide'});
+	}
+	$.getJSON("https://api.eet.nu/venues/" + venuesId
+	).done(function(data){
+		//items.add('Naam: '+ String(data.results[i].name) +' <br />');
+		$(".insertExtraInfo").html("");
+		var dataDescription = data.description;
+		if (dataDescription === null) { dataDescription = "Geen informatie beschikbaar."; }
+		var showImage = data.images.cropped;
+		if (showImage === null) {
+			showImage = "";
+		}else { showImage = '<tr class="tr_content"><td colspan="2"><img src="'+data.images.cropped+'" /></td></tr>'; }
+		if ($(document).width() > 750) {
+			// Tablet view
+			$(".tabletView").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
+		}else {
+			// mobile view
+			$(".insertExtraInfo").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
+		}
+	}).fail(function() {
+		$(".insertExtraInfo").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
 	});
 }
 

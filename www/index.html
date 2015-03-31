@@ -33,7 +33,6 @@
 				<!-- Index page -->
 				<h1>Restaurants in Nederland</h1>
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				<button id="webWebsite">Bezoek onze website</button>
 			</div>
 		</div>
 
@@ -67,8 +66,7 @@
 			<div data-role="main" class="ui-content">
 				<h1>Vind een restaurant naar uw smaak!</h1>
 				<p>We hebben verschillende categorieën voor u samengesteld. Klik door de navigatie structuur heen en vind binnen no-time een restaurant naar uw wensen!</p>
-				<div class="jsonResult">Data wordt geladen...
-				</div>
+				<div class="jsonResult">Data wordt geladen...</div>
 			</div>
 		</div>
 
@@ -133,12 +131,21 @@
 				<p>Missen we een restaurant? Kloppen er gegevens niet? Laat het ons weten!</p>
 				<button id="mailButton" class="button">Stuur ons een e-mail!</button>
 				<button id="callButton" class="button">Bel ons!</button>
+				<button id="webWebsite">Bezoek onze website</button>
 			</div>
 		</div>
 
 		<div data-role="page" id="restaurantCategory">
 			<div data-role="main" class="ui-content" id="insertCategoryInfo">
-				<p>Data wordt geladen..</p>
+				<div class="dataRestaurants"><p>Data wordt geladen..</p></div>
+				<div class="tabletView"></div>
+			</div>
+		</div>
+
+
+		<div data-role="page" id="restaurantExtraInfo">
+			<div data-role="main" class="ui-content">
+				<div class="insertExtraInfo"><p>Data wordt geladen..</p></div>
 			</div>
 		</div>
 
