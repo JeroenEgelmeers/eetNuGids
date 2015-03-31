@@ -35,8 +35,9 @@
 
   <!-- Plugin's we'll use in this application -->
   <gap:plugin name="org.apache.cordova.splashscreen"/> <!-- No weird screens when loading, but just a fancy logo! -->
-  <gap:plugin name="org.apache.cordova.inappbrowser"/> <!-- Do we need this? -->
-  <gap:plugin name="org.apache.cordova.device-orientation"/> <!-- Gives the possibility to show how the user has his phone horizontal / vertical. -->
+  <!-- <gap:plugin name="org.apache.cordova.inappbrowser"/> <!-- Do we need this? -->
+  <gap:plugin name="org.apache.cordova.device-orientation"/> <!-- Gives the possibility to show how the user has his phone 
+  horizontal / vertical. -->
   <gap:plugin name="org.apache.cordova.geolocation"/> <!-- We need this to know where the user is. -->
   <gap:plugin name="org.apache.cordova.globalization"/>
   <gap:plugin name="org.apache.cordova.contacts"/> <!-- Reading contacts to show them in-app -->
