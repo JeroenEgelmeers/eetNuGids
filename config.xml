@@ -1,9 +1,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="nl.avans.mbd1.id2060058" version="0.0.1">
   <name>Eetnu - MBD1 eind opdracht</name>
-  <description>Applicatie voor het spelen van planning poker.</description>
+  <description>Application to search for a restaurant.</description>
   <author email="mjwspren@avans.nl">42IN11SOc</author>
   <content src="index.html"/>
-  <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
   <preference name="target-device" value="universal"/>
   <preference name="fullscreen" value="true"/>
@@ -41,8 +40,13 @@
   <gap:plugin name="org.apache.cordova.geolocation"/> <!-- We need this to know where the user is. -->
   <gap:plugin name="org.apache.cordova.globalization"/>
   <gap:plugin name="org.apache.cordova.contacts"/> <!-- Reading contacts to show them in-app -->
-
   <!-- # Plugin's we'll use in this appplication -->
+
+  <!-- Premissions -->
+    <feature name="http://api.phonegap.com/1.0/contacts"/>
+    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+    <feature name="http://api.phonegap.com/1.0/network"/>
+  <!-- #Premissions -->
 
   <icon src="logo.png"/>
   <icon src="www/res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>

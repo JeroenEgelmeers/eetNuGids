@@ -36,6 +36,7 @@ pageBack = function ()
 	switch($.mobile.activePage.attr("id")) {
 		case "index":
 			$("#backButton").html("");
+			navigator.app.exitApp(); // exit app.
 		break;
 		case "restaurantOnLocationFound":
 			$.mobile.changePage("#restaurantOnLocation", { reverse: true, transition: 'slide'});
@@ -59,7 +60,9 @@ pageBack = function ()
 backButton = function ()
 {   
 	switch($.mobile.activePage.attr("id")) {
-		// case "index":
+		case "index":
+			$("#backButton").html("");
+		break;
 		// case "menu":
 		// 	$("#backButton").html("");
 		// break;
@@ -68,67 +71,6 @@ backButton = function ()
 		break;
 	}
 }
-
-$("#changeSettings").on('click', function (){ saveSettings(); });
-
-// check on backbutton
-$('a').on('tap',function(){
-	backButton();
-});
-
-$('button').on('tap',function(){
-	backButton();
-});
-
-// #check on backbutton
-
-$("#menuBtn").on("tap",function(){
-
-	if ($.mobile.activePage.attr("id") !== "menu")
-	{
-		idOfPreviousPage = $.mobile.activePage.attr("id");
- 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
-	}
-	else
-	{
-		$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
-		idOfPreviousPage = null;
-	}
-});
-
-$("#indexBtn").on("tap", function (e)
-{
-	$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
-});
-
-// Modules
-$('#webWebsite').on('tap',function(){
-   window.location.href = "http://www.eet.nu/"; 
-});
-$('#mailButton').on('tap',function(){
-   window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
-});
-$('#callButton').on('tap',function(){
-   window.location.href = "tel:0612345678"; 
-});
-
-$('#searchInKilometers').on('click',function(){
-	$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
-	$("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
-	//geolocation
-	setTimeout(function()
-	{
-		var geo_options = {
-		enableHighAccuracy: true, 
-		maximumAge : 3000,
-		timeout : 60000
-		};
-
-		navigator.geolocation.getCurrentPosition(onSuccessGeo, onErrorGeo, geo_options);
-	}, 0);
-	window.localStorage.setObject("kilometers", $("#kilometers").val());
-
-});
 
 $(document).ready(function(e)
 {
@@ -162,6 +104,67 @@ $(document).ready(function(e)
     });
 
     $("#header").toolbar();
+
+    $("#changeSettings").on('tap', function (){ saveSettings(); });
+
+	// check on backbutton
+	$('a').on('tap',function(){
+		backButton();
+	});
+
+	$('button').on('tap',function(){
+		backButton();
+	});
+
+	// #check on backbutton
+
+	$("#menuBtn").on("tap",function(){
+
+		if ($.mobile.activePage.attr("id") !== "menu")
+		{
+			idOfPreviousPage = $.mobile.activePage.attr("id");
+	 	 	$.mobile.changePage("#menu", {transition: 'slidedown'});
+		}
+		else
+		{
+			$.mobile.changePage("#" + idOfPreviousPage, {transition: 'slideup'});
+			idOfPreviousPage = null;
+		}
+	});
+
+	$("#indexBtn").on("tap", function (e)
+	{
+		$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
+	});
+
+	// Modules
+	$('#webWebsite').on('tap',function(){
+	   window.location.href = "http://www.eet.nu/"; 
+	});
+	$('#mailButton').on('tap',function(){
+	   window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
+	});
+	$('#callButton').on('tap',function(){
+	   window.location.href = "tel:0612345678"; 
+	});
+
+	$('#searchInKilometers').on('tap',function(){
+		$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
+		$("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
+		//geolocation
+		setTimeout(function()
+		{
+			var geo_options = {
+			enableHighAccuracy: true, 
+			maximumAge : 3000,
+			timeout : 60000
+			};
+
+			navigator.geolocation.getCurrentPosition(onSuccessGeo, onErrorGeo, geo_options);
+		}, 0);
+		window.localStorage.setObject("kilometers", $("#kilometers").val());
+
+	});
 
 });
 
@@ -317,4 +320,5 @@ function onDeviceReady ()
 		var fields = ["*"];
 		navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
 	}, 0);
+
 }
