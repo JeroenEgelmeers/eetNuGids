@@ -185,7 +185,7 @@ function nextCatPage(nextPage) {
 				if (window.localStorage.getObject("needsReview") === "on" && data.results[i].rating === null) {
 					// Don't show the item as it has been turned off by the user.
 				}else {
-					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2"><a href="#" onclick="loadExtraInfo('+data.results[i].id+')">'+ data.results[i].name +'</a><a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
+					items.push('<table width="100%" class="restaurant"><tr class="tr_header"><td colspan="2"><a href="#" class="restaurantName" onclick="loadExtraInfo('+data.results[i].id+')">'+ data.results[i].name +'</a><a href="http://maps.google.com/?daddr='+data.results[i].address.street + ' ' + data.results[i].address.zipcode + ' ' + data.results[i].address.city+'" class="linkNavigation">Navigeer</a></td></tr><tr class="tr_content"><td width="50%">Beoordeling:</td><td width="50%">'+ getStars((data.results[i].rating / 10)) +'</td></tr><tr class="tr_content"><td>Straat:</td><td>'+ data.results[i].address.street +'</td></tr><tr class="tr_content"><td>Postcode:</td><td>'+ data.results[i].address.zipcode +'</td></tr><tr class="tr_content"><td>Plaats:</td><td>'+ data.results[i].address.city +'</td></tr><tr class="tr_content"><td>Telefoon:</td><td><a href="tel:'+ data.results[i].telephone +'">'+ data.results[i].telephone +'</a></td></tr></table>');
 				}
 			}
 			$(".dataRestaurants").html("");
@@ -225,20 +225,17 @@ function loadExtraInfo(venuesId) {
 	).done(function(data){
 		//items.add('Naam: '+ String(data.results[i].name) +' <br />');
 		$(".insertExtraInfo").html("");
+		$(".tabletView").html("");
 		var dataDescription = data.description;
 		if (dataDescription === null) { dataDescription = "Geen informatie beschikbaar."; }
 		var showImage = data.images.cropped;
 		if (showImage === null) {
 			showImage = "";
 		}else { showImage = '<tr class="tr_content"><td colspan="2"><img src="'+data.images.cropped+'" /></td></tr>'; }
-		if ($(document).width() > 750) {
-			// Tablet view
+			// mobile view
 			$(".tabletView").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
 			 $("html, body").animate({ scrollTop: 0 }, "slow");
-		}else {
-			// mobile view
 			$(".insertExtraInfo").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
-		}
 	}).fail(function() {
 		$(".insertExtraInfo").html("<p>Controleer uw internet verbinding. Er kan geen data worden opgehaald. Mits uw internet verbinding stabiel is kan het zijn dat we momenteel geen gegevens op kunnen halen. Probeer het later nog eens.</p>")
 	});
