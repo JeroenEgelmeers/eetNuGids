@@ -234,6 +234,7 @@ function loadExtraInfo(venuesId) {
 		if ($(document).width() > 750) {
 			// Tablet view
 			$(".tabletView").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
+			 $("html, body").animate({ scrollTop: 0 }, "slow");
 		}else {
 			// mobile view
 			$(".insertExtraInfo").html('<table width="100%"><tr class="tr_header"><td colspan="2">'+data.name+'</td></tr>'+showImage+'<tr class="tr_header"><td colspan="2">Beschrijving</td></tr><tr class="tr_content"><td colspan="2">'+dataDescription+'</td></tr></table>');
