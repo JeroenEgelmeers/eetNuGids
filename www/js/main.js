@@ -2,6 +2,7 @@ var idOfPreviousPage = null;
 
 
 var db;
+var contactsFound = 0;
 
 Storage.prototype.setObject = function (key, value)	{ 
 	this.setItem(key, JSON.stringify(value)); 
@@ -54,6 +55,7 @@ pageBack = function ()
 	if (idOfPreviousPage == "index") {
 		$("#backButton").html("");
 	}
+	backButton();
 }
 
 
@@ -139,7 +141,7 @@ $(document).ready(function(e)
 
 	// Modules
 	$('#webWebsite').on('tap',function(){
-	   window.location.href = "http://www.eet.nu/"; 
+		window.open("http://www.eet.nu", "_system");
 	});
 	$('#mailButton').on('tap',function(){
 	   window.location.href = "mailto:support@eetnu.zendesk.com?body=Uw%20vraag%20of%20opmerking."; 
@@ -149,7 +151,7 @@ $(document).ready(function(e)
 	});
 
 	$('#searchInKilometers').on('tap',function(){
-		$.mobile.changePage('#pickRestaurant', {transition: 'slide'});
+		$.mobile.changePage('#restaurantOnLocationFound', {transition: 'slide'});
 		$("#foundRestaurants").html("<p>Data wordt geladen.. Een moment geduld a.u.b..");
 		//geolocation
 		setTimeout(function()
@@ -191,7 +193,6 @@ function nextCatPage(nextPage) {
 }
 
 function showRestaurantsFound(nextPage) {
-	$.mobile.changePage('#restaurantOnLocationFound', {transition: 'slide'});
 	$.getJSON(nextPage
 	).done(function(data){
 			var items = [];
@@ -288,16 +289,17 @@ function onSuccessContacts (contacts)
 					html += '<td>'+ contacts[i].addresses[0].locality +'</td>';
 				html += '</tr>';
 			}
+			contactsFound++;
 		}
 	}
-
-	if (contacts.length === 0)
-	{
-		html += '<tr class="tr_content"><td colspan="2">Geen contacten gevonden.</td></tr>';
-	}
 	html += '</table>';
-
-	$(".loadContacts").html(html);
+	if (contactsFound == 0) {
+		html += 'Helaas, we hebben geen contacten kunnen vinden.';
+	}
+	if (html != null && contactsFound == 0 || html == "Helaas, we hebben geen contacten kunnen vinden.") {
+		$(".loadContacts").html("");
+	}
+	$(".loadContacts").html($(".loadContacts").html() + html);
 }
 
 function onErrorContacts (contactError)
@@ -314,11 +316,25 @@ function onDeviceReady ()
 	//contacts
 	setTimeout(function()
 	{
-		var contactOptions      = new ContactFindOptions();
-		contactOptions.filter   = "snackbar";
-		contactOptions.multiple = true;
-		var fields = ["*"];
-		navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
-	}, 0);
+		for(var i = 0; i <= 2; i++) {
+			var contactOptions      = new ContactFindOptions();
+			contactOptions.multiple = true;
+			var fields = ["*"];
 
+			switch(i) {
+				case 0:
+					contactOptions.filter   = "restaurant";
+				break;
+				case 1:
+					contactOptions.filter   = "snackbar";
+				break;
+				case 2:
+					contactOptions.filter   = "chinees";
+				break;
+			}
+
+			navigator.contacts.find(fields, onSuccessContacts, onErrorContacts, contactOptions);
+		}
+
+	}, 0);
 }
