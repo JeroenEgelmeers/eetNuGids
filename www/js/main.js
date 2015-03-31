@@ -216,7 +216,7 @@ function showRestaurantsFound(nextPage) {
 
 function loadExtraInfo(venuesId) {
 	$(".insertExtraInfo").html("<p>Data wordt geladen..</p>");
-	if ($(document).width() > 600) {
+	if ($(document).width() > 750) {
 		
 	}else {
 		$.mobile.changePage("#restaurantExtraInfo", { reverse: false, transition: 'slide'});
