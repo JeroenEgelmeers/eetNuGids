@@ -174,6 +174,8 @@ $(document).ready(function(e)
 });
 
 function nextCatPage(nextPage) {
+	$(".insertExtraInfo").html("");
+	$(".tabletView").html("");
 	$.mobile.changePage('#restaurantCategory', {transition: 'slide'});
 	$(".dataRestaurants").html("<p>Data wordt geladen..");
 	var sortedBy = window.localStorage.getObject("sort_by");
